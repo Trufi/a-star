@@ -124,7 +124,13 @@
             result[i] = [];
 
             for (var j = 0; j < this.height; j++) {
-                result[i][j] = this.fields[i][j].state;
+                var s = this.fields[i][j].state;
+
+                if (s.length) {
+                    result[i][j] = 0;
+                } else {
+                    result[i][j] = this.fields[i][j].state;
+                }
             }
         }
 
