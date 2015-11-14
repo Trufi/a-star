@@ -24,15 +24,19 @@
     var searchButton = document.querySelector('#search');
     searchButton.addEventListener('click', () => {
         var field = grid.get();
+        var p;
+
         localStorage.setItem('grid', JSON.stringify(field));
 
         console.time('Search');
 
         for (var i = 0; i < 50; i++) {
-            search(field, grid.start, grid.end);
+            p = search(field, grid.start, grid.end);
         }
 
         console.timeEnd('Search');
+
+        drawField(p);
     });
 
     window.drawField = function(path) {

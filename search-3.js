@@ -1,6 +1,4 @@
 function search(field, start, end) {
-    var closed = {};
-
     var list = [];
 
     var graphNears = [
@@ -10,8 +8,13 @@ function search(field, start, end) {
         [0, 1]
     ];
 
+    var closed = {};
 
-    var push =  Array.prototype.push;
+    for (var i = 0; i < field.length; i++) {
+        closed[i] = {};
+    }
+
+    var push = Array.prototype.push;
 
     list.push([start]);
 
@@ -19,13 +22,13 @@ function search(field, start, end) {
         var p = list.pop();
         var x = p[p.length - 1];
 
-        if (closed[x[0] + ',' + x[1]]) {
+        if (closed[x[0]][x[1]]) {
             continue;
         } else if (eql(x, end)) {
             return p;
         }
 
-        closed[x[0] + ',' + x[1]] = true;
+        closed[x[0]][x[1]] = true;
 
         var nears = getNears(p);
 

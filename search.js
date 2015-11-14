@@ -12,8 +12,7 @@ function search(field, start, end) {
         if (inArray(closed, x)) {
             continue;
         } else if (eql(x, end)) {
-            drawField(p);
-            break;
+            return p;
         }
 
         closed.push(x);
