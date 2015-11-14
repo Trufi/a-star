@@ -1,8 +1,12 @@
 (function () {
+    var fieldSize = 30;
 
     var grid = new Grid({
-        width: 10,
-        height: 10
+        width: 30,
+        height: 30,
+        fieldSize: fieldSize,
+        start: [5, 15],
+        end: [25, 15]
     });
 
     var loadData = localStorage.getItem('grid');
@@ -11,19 +15,26 @@
         grid.load(JSON.parse(loadData));
     }
 
-    document.body.appendChild(grid.container);
+    var container = document.querySelector('#container');
+    container.appendChild(grid.container);
 
+    var clearButton = document.querySelector('#clear');
+    clearButton.addEventListener('click', () => grid.clear());
     var searchButton = document.querySelector('#search');
-    searchButton.addEventListener('click', search);
-
-    function search() {
+    searchButton.addEventListener('click', () => {
         var field = grid.get();
-
         localStorage.setItem('grid', JSON.stringify(field));
 
-        var start = [0, 0];
-        var end = [grid.width - 1, grid.height - 1];
+        console.time('Search');
 
+        for (var i = 0; i < 50; i++) {
+            search(field, grid.start, grid.end);
+        }
+
+        console.timeEnd('Search');
+    });
+
+    function search(field, start, end) {
         var closed = [];
 
         var list = [];
@@ -37,8 +48,6 @@
             if (inArray(closed, x)) {
                 continue;
             } else if (eql(x, end)) {
-                console.log('find', p);
-
                 drawField(p);
                 break;
             }
